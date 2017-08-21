@@ -1,0 +1,38 @@
+{
+  "name": "node-collection-json",
+  "version": "1.0.0",
+  "description": "Nodejs tools for easy manipulation of collection+json objects",
+  "main": "lib/index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "compile": "babel -d lib/ src/ --presets es2015",
+    "prepublish": "npm run compile",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nuxnik/node-collection-json.git"
+  },
+  "keywords": [
+    "collection+json",
+    "collections",
+    "jsonapi",
+    "api"
+  ],
+  "author": "S. Fleming",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nuxnik/node-collection-json/issues"
+  },
+  "homepage": "https://github.com/nuxnik/node-collection-json#readme",
+  "dependencies": {
+    "http-status": "^1.0.1",
+    "request": "^2.81.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1"
+  }
+}
