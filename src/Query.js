@@ -1,5 +1,7 @@
-import Entity from './Entity';
+import Collection from './Collection';
 import Data from './Data';
+import Entity from './Entity';
+import axios from 'axios';
 
 /**
  * Creates a valid collection+json query object
@@ -172,7 +174,7 @@ export default class Query extends Entity
    * @param {String} name The name of the value
    * @param {String} value The value of the data
    * @param {String} prompt The prompt value of the data
-   * @return Template
+   * @return Query
    */
   setData(name, value, prompt = null)
   {
@@ -187,7 +189,30 @@ export default class Query extends Entity
       }
     };
     this.addData(new Data(name, value, prompt));
+
     return this;
+  }
+
+  /**
+   * Query the server
+   *
+   * @return Query
+   */
+  query()
+  {
+    // build the query
+    let href = this.getHref() + '?';
+    for (const data of this.getData()) {
+      href = href + data.getName() + '=' + data.getValue() + '&'
+    }
+    console.log("QUERY", JSON.stringify(href, null, 2));
+    return new Promise( (resolve, reject) => {
+      axios.get(href).then( (response) => {
+        return resolve(Collection.getByObject(response.data));
+      }).catch( error => {
+        return resolve(Collection.getByObject(error.response.data));
+      })
+    });
   }
 
 

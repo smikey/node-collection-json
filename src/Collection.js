@@ -318,6 +318,22 @@ export default class Collection extends Entity
   }
 
   /**
+   * Get an query instance by rel
+   *
+   * @param String rel - The query rel
+   * @return Query
+   */
+  getQueryByRel(rel)
+  {
+    for (const query of this.getQueries()) {
+      if (query.getRel() == rel) {
+        return query;
+      }
+    }
+    return new Query(url);
+  }
+
+  /**
    * Get array of query objects
    *
    * @return array

@@ -165,7 +165,7 @@ export default class Link extends Entity
       axios.get(resource).then( (response) => {
         return resolve(Collection.getByObject(response.data));
       }).catch( error => {
-        console.log("ERROR", JSON.stringify(error, null, 2));
+        return reject(Collection.getByObject(error.response.data));
       })
     });
   }
