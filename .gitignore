@@ -1,2 +1,3 @@
 node_modules/
-test/test.js
+src/test.js
+lib/test.js

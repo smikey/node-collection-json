@@ -68,7 +68,7 @@ export default class Client
       axios.get(resource).then( (response) => {
         return resolve(Collection.getByObject(response.data));
       }).catch( error => {
-        console.log("ERROR", error);
+        return reject(Collection.getByObject(error.response.data));
       });
     });
   }

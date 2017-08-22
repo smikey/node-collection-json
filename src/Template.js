@@ -134,4 +134,25 @@ export default class Template extends Entity
     this.addData(new Data(name, value, prompt));
     return this;
   }
+
+  /**
+   * Import an Item object into the template
+   *
+   * @param {Item} item the item object to import
+   * @return Template
+   */
+  importItem(item)
+  {
+    for (const templateData of this.getData()) {
+      for (const itemData of item.getData()) {
+        if (itemData.getName() === templateData.getName()) {
+          templateData.setName(itemData.getName());
+          templateData.setValue(itemData.getValue());
+          templateData.setPrompt(itemData.getPrompt());
+        }
+      }
+    }
+
+    return this;
+  }
 }

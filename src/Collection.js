@@ -278,6 +278,21 @@ export default class Collection extends Entity
   }
 
   /**
+   * Get the first item
+   *
+   * @return Item
+   */
+  getFirstItem()
+  {
+    let item = null;
+    if (typeof this.items[0] !== "undefined") {
+      item = this.items[0];
+    }
+
+    return item;
+  }
+
+  /**
    * Add query object to the collection
    *
    * @param object query The query object
@@ -420,9 +435,9 @@ export default class Collection extends Entity
    *
    * @return Promise
    */
-  put()
+  put(resource)
   {
-    return this.dispatch('put');
+    return this.dispatch('put', resource);
   }
 
   /**
@@ -430,12 +445,18 @@ export default class Collection extends Entity
    *
    * @return Promise
    */
-  dispatch(method)
+  dispatch(method, resource = null)
   {
     // create the template string
     let templateData = {};
     templateData.template = this.getTemplate().getJson();
     let templateString = JSON.stringify(templateData);
+
+    // set the resource
+    let url = this.getHref();
+    if (resource !== null) {
+      url = resource;
+    }
 
     // dispatch
     switch (method) {
@@ -444,13 +465,13 @@ export default class Collection extends Entity
         return new Promise( (resolve, reject) => {
           axios({
             method: method,
-            url: this.getHref(),
+            url: url,
             headers: {'Content-Type': 'application/vnd.collection+json'},
             data: templateString,
           }).then( (response) => {
             return resolve(Collection.getByObject(response.data));
           }).catch ( error => {
-            return reject(error);
+            return reject(Collection.getByObject(error.response.data));
           });
         });
         break;

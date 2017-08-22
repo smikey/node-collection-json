@@ -209,4 +209,21 @@ export default class Item extends Entity
 
     return template;
   }
+
+  /**
+   * Get a data value by the name key
+   *
+   * @param {String} name The name key to search by
+   */
+  getDataValueByName(name)
+  {
+    let foundData = null;
+    for (const data of this.getData()) {
+      if (data.getName() === name) {
+        foundData = data.getValue();
+      }
+    }
+
+    return foundData;
+  }
 }
