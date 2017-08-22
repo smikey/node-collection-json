@@ -1,5 +1,3 @@
-
-
 /**
  * Entity class. Used as an abstract class with helper methods that all Collection+JSON classes inherit.
  *
@@ -8,41 +6,6 @@
  */
 export default class Entity
 {
-
-  /**
-   * Output the collection to string format
-   *
-   * @return string
-   */
-  toString()
-  {
-    return this.getJson().toString();
-  }
-
-  /**
-   * Get a link object by the rel name
-   *
-   * @param {String} name The rel name
-   * @return Link
-   */
-  getLinkByRel(rel)
-  {
-    return new Promise((resolve, reject) => {
-      let link = null;
-
-      // check the links object
-      if (this.links !== null && this.links.length > 0) {
-        for (const link of this.links) {
-          if (link.getRel() == rel) {
-            return resolve(link);
-          }
-        }
-      }
-
-      return reject("No such link found rel: " + rel);
-    });
-  }
-
   /**
    * Helper method for getting an object value by key
    *
@@ -71,4 +34,39 @@ export default class Entity
 
     return result;
   }
+
+  /**
+   * Output the collection to string format
+   *
+   * @return string
+   */
+  toString()
+  {
+    return JSON.stringify(this.getJson());
+  }
+
+  /**
+   * Get a link object by the rel name
+   *
+   * @param {String} name The rel name
+   * @return Link
+   */
+  getLinkByRel(rel)
+  {
+    return new Promise((resolve, reject) => {
+      let link = null;
+
+      // check the links object
+      if (this.links !== null && this.links.length > 0) {
+        for (const link of this.links) {
+          if (link.getRel() == rel) {
+            return resolve(link);
+          }
+        }
+      }
+
+      return reject("No such link found rel: " + rel);
+    });
+  }
+
 }

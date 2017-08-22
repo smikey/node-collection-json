@@ -1,5 +1,3 @@
-
-
 /**
  * Entry point for node-collection-json module
  *

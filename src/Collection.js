@@ -1,11 +1,11 @@
-
 import CollectionError from './CollectionError';
+import Entity from './Entity';
+import Error from './Error';
 import Item from './Item';
 import Link from './Link';
 import Query from './Query';
-import Entity from './Entity';
-import Error from './Error';
 import Template from './Template';
+import axios from 'axios';
 
 /**
  * Creates and validates collection+json object
@@ -403,6 +403,61 @@ export default class Collection extends Entity
     }
 
     return {collection};
+  }
+
+  /**
+   * Post template contents to the server
+   *
+   * @return Promise
+   */
+  post()
+  {
+    return this.dispatch('post');
+  }
+
+  /**
+   * Put template contents to the server
+   *
+   * @return Promise
+   */
+  put()
+  {
+    return this.dispatch('put');
+  }
+
+  /**
+   * Send template contents to the server and get new collection
+   *
+   * @return Promise
+   */
+  dispatch(method)
+  {
+    // create the template string
+    let templateData = {};
+    templateData.template = this.getTemplate().getJson();
+    let templateString = JSON.stringify(templateData);
+
+    // dispatch
+    switch (method) {
+      case 'put':
+      case 'post':
+        return new Promise( (resolve, reject) => {
+          axios({
+            method: method,
+            url: this.getHref(),
+            headers: {'Content-Type': 'application/vnd.collection+json'},
+            data: templateString,
+          }).then( (response) => {
+            return resolve(Collection.getByObject(response.data));
+          }).catch ( error => {
+            return reject(error);
+          });
+        });
+        break;
+      // case 'patch':
+      default:
+        throw new Error("Method type: " + method + " not found");
+    }
   }
 
 }

@@ -1,4 +1,3 @@
-
 import Entity from './Entity';
 import Data from './Data';
 
