@@ -167,6 +167,31 @@ export default class Query extends Entity
   }
 
   /**
+   * Set a value by name
+   *
+   * @param {String} name The name of the value
+   * @param {String} value The value of the data
+   * @param {String} prompt The prompt value of the data
+   * @return Template
+   */
+  setData(name, value, prompt = null)
+  {
+    // get the value by name
+    for (const data of this.getData()) {
+      if (data.getName() == name) {
+        data.setValue(value);
+        if (prompt !== null) {
+          data.setPrompt(prompt);
+        }
+        return this;
+      }
+    };
+    this.addData(new Data(name, value, prompt));
+    return this;
+  }
+
+
+  /**
    * Get compiled json object
    *
    * @return Object
