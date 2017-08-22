@@ -1,6 +1,5 @@
-
 import Collection from './Collection';
-import request from 'request';
+import axios from 'axios';
 
 /**
  * Class: Client
@@ -8,8 +7,8 @@ import request from 'request';
  * @author S. Fleming <npm@int5.net>
  * @since Mon Aug 14 16:47:09 CEST 2017
  */
- export default class Client
- {
+export default class Client
+{
   /**
    * The API type
    *
@@ -66,20 +65,10 @@ import request from 'request';
   getCollectionByResource(resource)
   {
     return new Promise( (resolve, reject) => {
-      request({
-        uri: resource,
-        method: "GET",
-        timeout: 10000,
-        followRedirect: true,
-        maxRedirects: 10
-      }, (error, response, body) => {
-        if (error !== null) {
-          return reject(error);
-        } else {
-
-          // convert string to object and resolve
-          return resolve(Collection.getByObject(JSON.parse(body)));
-        }
+      axios.get(resource).then( (response) => {
+        return resolve(Collection.getByObject(response.data));
+      }).catch( error => {
+        console.log("ERROR", error);
       });
     });
   }
@@ -99,4 +88,4 @@ import request from 'request';
       });
     }
   }
- }
+}

@@ -1,7 +1,6 @@
-
 import Collection from './Collection';
 import Entity from './Entity';
-import request from 'request';
+import axios from 'axios';
 
 /**
  * Creates a valid collection+json link object
@@ -162,22 +161,12 @@ export default class Link extends Entity
    */
   follow()
   {
-    return new Promise((resolve, reject) => {
-
-      // get the url
-      request({
-        uri: this.getHref(),
-        method: "GET",
-        timeout: 10000,
-        followRedirect: true,
-        maxRedirects: 10
-      }, (error, response, body) => {
-        if (error !== null ) {
-          return reject(error);
-        } else {
-          return resolve(Collection.getByObject(JSON.parse(body)));
-        }
-      });
+    return new Promise( (resolve, reject) => {
+      axios.get(resource).then( (response) => {
+        return resolve(Collection.getByObject(response.data));
+      }).catch( error => {
+        console.log("ERROR", JSON.stringify(error, null, 2));
+      })
     });
   }
 
