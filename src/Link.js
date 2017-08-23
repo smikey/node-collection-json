@@ -162,7 +162,7 @@ export default class Link extends Entity
   follow()
   {
     return new Promise( (resolve, reject) => {
-      axios.get(resource).then( (response) => {
+      axios.get(this.getHref()).then( (response) => {
         return resolve(Collection.getByObject(response.data));
       }).catch( error => {
         return reject(Collection.getByObject(error.response.data));
