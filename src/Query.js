@@ -196,7 +196,7 @@ export default class Query extends Entity
   /**
    * Query the server
    *
-   * @return Query
+   * @return Promise<Collection>
    */
   query()
   {
@@ -205,7 +205,6 @@ export default class Query extends Entity
     for (const data of this.getData()) {
       href = href + data.getName() + '=' + data.getValue() + '&'
     }
-    console.log("QUERY", JSON.stringify(href, null, 2));
     return new Promise( (resolve, reject) => {
       axios.get(href).then( (response) => {
         return resolve(Collection.getByObject(response.data));
