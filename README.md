@@ -193,7 +193,7 @@ client.getCollection().then( collection => {
     collection.getQueryByRel('search').setData('name', 'banana').query().then( collection => {
 
       // save the data
-      collection.delete().then( collection => {
+      collection.getFirstItem().delete().then( collection => {
 
         // display the data to console
         console.log("DELETED DATA", JSON.stringify(collection.getJson(), null, 2));
