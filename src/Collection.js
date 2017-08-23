@@ -243,6 +243,23 @@ export default class Collection extends Entity
   }
 
   /**
+   * Get an link instance by rel
+   *
+   * @param String rel - The link rel
+   * @return Link
+   */
+  getLinkByRel(rel)
+  {
+    for (const link of this.getLinks()) {
+      if (link.getRel() == rel) {
+        return link;
+      }
+    }
+    return new Link(url);
+  }
+
+
+  /**
    * Add item object to the collection
    *
    * @param object item The item object
@@ -424,7 +441,7 @@ export default class Collection extends Entity
     }
 
     // add template
-    if(Object.keys(this.getTemplate()).length > 0 ) {
+    if(Object.keys(this.getTemplate()).length > 0 && this.getTemplate().getData().length > 0 ) {
       collection.template = this.getTemplate().getJson();
     }
 
