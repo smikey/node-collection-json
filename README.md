@@ -3,6 +3,58 @@ Nodejs tools for easy manipulation of collection+json objects.
 
 # Client Usage
 
+The calls to the API listed below are based on an imaginary API which has the following schema:
+
+```JSON
+{
+    "collection": {
+        "version": "1.0",
+        "href": "http://plants-api/api/plants",
+        "links": [
+            {
+                "href": "http://plants-api/api",
+                "rel": "root"
+            },
+            {
+                "href": "http://plants-api/api/plants",
+                "rel": "plants"
+            }
+        ],
+        "queries": [
+            {
+                "href": "http://plants-api/api/search",
+                "rel": "search",
+                "data": [
+                    {
+                        "name": "name",
+                        "value": "",
+                        "prompt": "The plant name"
+                    }
+                ]
+            }
+        ],
+        "template": {
+            "data": [
+                {
+                    "name": "name",
+                    "value": "",
+                    "prompt": "Plant Name"
+                },
+                {
+                    "name": "type",
+                    "value": "",
+                    "prompt": "Plant type"
+                },
+                {
+                    "name": "color",
+                    "value": "",
+                    "prompt": "Plant color"
+                }
+            ]
+        }
+    }
+}
+```
 
 ## Query/Crawl the API
 
@@ -10,7 +62,7 @@ Nodejs tools for easy manipulation of collection+json objects.
 import {NodeJsonClient} from 'node-collection-json';
 
 // create client
-let client = new NodeJsonClient("http://example-api/example");
+let client = new NodeJsonClient("http://plants-api/api");
 
 // get the collection
 client.getCollection().then( collection => {
@@ -35,7 +87,7 @@ client.getCollection().then( collection => {
 import {NodeJsonClient} from 'node-collection-json';
 
 // create client
-let client = new NodeJsonClient("http://example-api/api");
+let client = new NodeJsonClient("http://plants-api/api");
 
 // get the collection
 client.getCollection().then( collection => {
@@ -77,7 +129,7 @@ client.getCollection().then( collection => {
 import {NodeJsonClient} from 'node-collection-json';
 
 // create client
-let client = new NodeJsonClient("http://example-api/api");
+let client = new NodeJsonClient("http://plants-api/api");
 
 // get the collection
 client.getCollection().then( collection => {
@@ -85,7 +137,7 @@ client.getCollection().then( collection => {
   // follow a link
   collection.getLinkByRel('plants').follow().then( collection => {
 
-    // query the server - update "apple" -> "banana"
+    // query the server
     collection.getQueryByRel('search').setData('name', 'apple').query().then( collection => {
 
       // import the first item to the template
@@ -129,7 +181,7 @@ client.getCollection().then( collection => {
 import {NodeJsonClient} from 'node-collection-json';
 
 // create client
-let client = new NodeJsonClient("http://example-api/api");
+let client = new NodeJsonClient("http://plants-api/api");
 
 // get the collection
 client.getCollection().then( collection => {
