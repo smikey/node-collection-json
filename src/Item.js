@@ -1,6 +1,8 @@
-import Entity from './Entity';
+import Collection from './Collection';
 import Data from './Data';
+import Entity from './Entity';
 import Link from './Link';
+import axios from 'axios';
 
 /**
  * Creates a valid collection+json item object
@@ -167,6 +169,22 @@ export default class Item extends Entity
   }
 
   /**
+   * Get an link instance by rel
+   *
+   * @param String rel - The link rel
+   * @return Link
+   */
+  getLinkByRel(rel)
+  {
+    for (const link of this.getLinks()) {
+      if (link.getRel() == rel) {
+        return link;
+      }
+    }
+    return new Link(url);
+  }
+
+  /**
    * Get compiled json object
    *
    * @return Object
@@ -225,5 +243,21 @@ export default class Item extends Entity
     }
 
     return foundData;
+  }
+
+  /**
+   * Delete the item from the server
+   *
+   * @return Promise<Collection>
+   */
+  delete()
+  {
+    return new Promise( (resolve, reject) => {
+      axios.delete(this.getHref()).then( (response) => {
+        return resolve(Collection.getByObject(response.data));
+      }).catch( error => {
+        return resolve(Collection.getByObject(error.response.data));
+      })
+    });
   }
 }
