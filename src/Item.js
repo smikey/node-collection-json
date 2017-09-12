@@ -145,6 +145,23 @@ export default class Item extends EntityLinker
   }
 
   /**
+   * Get the data object by name
+   *
+   * @param {string} name The name of the key to find
+   * @return Data
+   */
+  getDataByName(name)
+  {
+    for(let data of this.data) {
+        if(data.getName() === name) {
+            return data;
+        }
+    }
+
+    return new Data(key);
+  }
+
+  /**
    * Add link object to the collection
    *
    * @param object link The link object
@@ -166,22 +183,6 @@ export default class Item extends EntityLinker
   getLinks()
   {
     return this.links;
-  }
-
-  /**
-   * Get an link instance by rel
-   *
-   * @param String rel - The link rel
-   * @return Link
-   */
-  getLinkByRel(rel)
-  {
-    for (const link of this.getLinks()) {
-      if (link.getRel() == rel) {
-        return link;
-      }
-    }
-    return new Link(url);
   }
 
   /**
@@ -257,6 +258,29 @@ export default class Item extends EntityLinker
         return resolve(Collection.getByObject(response.data));
       }).catch( error => {
         return resolve(Collection.getByObject(error.response.data));
+      })
+    });
+  }
+
+  /**
+   * Follow the href link
+   *
+   * @return Promise
+   */
+  follow(params = null)
+  {
+    return new Promise( (resolve, reject) => {
+      let url = this.getHref();
+      if (params !== null && params.constructor === Array) {
+        url += '?';
+        for(let key in params) {
+            url += '&' + key + '=' + params[key];
+        }
+      }
+      axios.get(url).then( (response) => {
+        return resolve(Collection.getByObject(response.data));
+      }).catch( error => {
+        return reject(Collection.getByObject(error.response.data));
       })
     });
   }

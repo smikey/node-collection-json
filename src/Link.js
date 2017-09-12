@@ -159,14 +159,21 @@ export default class Link extends Entity
    *
    * @return Collection
    */
-  follow()
+  follow(params = null)
   {
     return new Promise( (resolve, reject) => {
-      axios.get(this.getHref()).then( (response) => {
+      let url = this.getHref();
+      if (params !== null && params.constructor === Array) {
+        url += '?';
+        for(let key in params) {
+            url += '&' + key + '=' + params[key];
+        }
+      }
+      axios.get(url).then( (response) => {
         return resolve(Collection.getByObject(response.data));
       }).catch( error => {
         return reject(Collection.getByObject(error.response.data));
-      })
+      });
     });
   }
 

@@ -34,4 +34,5 @@ export default class EntityLinker extends Entity
     */
     return new Link(null, null);
   }
+
 }
