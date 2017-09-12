@@ -26,6 +26,9 @@ export {default as CJError} from './Error';
 // The Item container class
 export {default as CJItem} from './Item';
 
+// The Link container class
+export {default as CJLink} from './Link';
+
 // The Query container class
 export {default as CJQuery} from './Query';
 
