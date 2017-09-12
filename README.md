@@ -59,10 +59,10 @@ The calls to the API listed below are based on an imaginary API which has the fo
 ## Query/Crawl the API
 
 ```javascript
-import {NodeJsonClient} from 'node-collection-json';
+import {CJClient} from 'node-collection-json';
 
 // create client
-let client = new NodeJsonClient("http://plants-api/api");
+let client = new CJClient("http://plants-api/api");
 
 // get the collection
 client.getCollection().then( collection => {
@@ -84,10 +84,10 @@ client.getCollection().then( collection => {
 ##  POST Data to the API
 
 ```javascript
-import {NodeJsonClient} from 'node-collection-json';
+import {CJClient} from 'node-collection-json';
 
 // create client
-let client = new NodeJsonClient("http://plants-api/api");
+let client = new CJClient("http://plants-api/api");
 
 // get the collection
 client.getCollection().then( collection => {
@@ -126,10 +126,10 @@ client.getCollection().then( collection => {
 ##  Query/Update the API
 
 ```javascript
-import {NodeJsonClient} from 'node-collection-json';
+import {CJClient} from 'node-collection-json';
 
 // create client
-let client = new NodeJsonClient("http://plants-api/api");
+let client = new CJClient("http://plants-api/api");
 
 // get the collection
 client.getCollection().then( collection => {
@@ -178,10 +178,10 @@ client.getCollection().then( collection => {
 ##  Query/Delete from API
 
 ```javascript
-import {NodeJsonClient} from 'node-collection-json';
+import {CJClient} from 'node-collection-json';
 
 // create client
-let client = new NodeJsonClient("http://plants-api/api");
+let client = new CJClient("http://plants-api/api");
 
 // get the collection
 client.getCollection().then( collection => {
