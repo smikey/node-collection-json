@@ -243,23 +243,6 @@ export default class Collection extends Entity
   }
 
   /**
-   * Get an link instance by rel
-   *
-   * @param String rel - The link rel
-   * @return Link
-   */
-  getLinkByRel(rel)
-  {
-    for (const link of this.getLinks()) {
-      if (link.getRel() == rel) {
-        return link;
-      }
-    }
-    return new Link(url);
-  }
-
-
-  /**
    * Add item object to the collection
    *
    * @param object item The item object

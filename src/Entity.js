@@ -7,6 +7,30 @@
 export default class Entity
 {
   /**
+   * Get a link object by the rel name
+   *
+   * @param {String} name The rel name
+   * @return Link
+   */
+  getLinkByRel(rel)
+  {
+    return new Promise((resolve, reject) => {
+      let link = null;
+
+      // check the links object
+      if (this.links !== null && this.links.length > 0) {
+        for (const link of this.links) {
+          if (link.getRel() == rel) {
+            return resolve(link);
+          }
+        }
+      }
+
+      return reject("No such link found rel: " + rel);
+    });
+  }
+
+  /**
    * Helper method for getting an object value by key
    *
    * @param Object object the object to check
