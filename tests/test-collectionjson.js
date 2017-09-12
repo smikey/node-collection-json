@@ -128,21 +128,9 @@ describe('Collection+Json Library', () => {
       expect(collection.getError().getTitle()).to.equal("Server Error");
 
       // get the link by name
-      collection.getLinkByRel('feed').then( (link) => {
-        expect(link.getHref()).to.equal('http://example.org/friends/rss');
-
-        // test link that doesn't exist
-        collection.getLinkByRel('not_there').then( (link) => {
-          assert.fail("This link doesn't exist");
-          done();
-        }).catch(reason => {
-          done();
-        });
-        done();
-      }).catch(reason => {
-        assert.fail(reason);
-        done();
-      });
+      let link = collection.getLinkByRel('feed');
+      expect(link.getHref()).to.equal('http://example.org/friends/rss');
+      done();
     });
   });
 
