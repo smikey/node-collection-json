@@ -1,5 +1,5 @@
 import CollectionError from './CollectionError';
-import Entity from './Entity';
+import EntityLinker from './EntityLinker';
 import Error from './Error';
 import Item from './Item';
 import Link from './Link';
@@ -13,7 +13,7 @@ import axios from 'axios';
  * @author S. Fleming <npm@int5.net>
  * @since Tue Jul 25 11:07:32 CEST 2017
  */
-export default class Collection extends Entity
+export default class Collection extends EntityLinker
 {
   /**
    * Get the collection version

@@ -45,28 +45,4 @@ export default class Entity
     return JSON.stringify(this.getJson());
   }
 
-  /**
-   * Get a link object by the rel name
-   *
-   * @param {String} name The rel name
-   * @return Link
-   */
-  getLinkByRel(rel)
-  {
-    let link = null;
-
-    // check the links object
-    if (this.links !== null && this.links.length > 0) {
-      for (const link of this.links) {
-        if (link.getRel() == rel) {
-          return link;
-        }
-      }
-    }
-
-    let errorMessage = "No such link found rel: " + rel;
-    console.error(errorMessage);
-    throw new Error(errorMessage);
-  }
-
 }

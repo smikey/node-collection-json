@@ -130,6 +130,9 @@ describe('Collection+Json Library', () => {
       // get the link by name
       let link = collection.getLinkByRel('feed');
       expect(link.getHref()).to.equal('http://example.org/friends/rss');
+
+      link = collection.getLinkByRel('no_link');
+      expect(link.getHref()).to.equal(null);
       done();
     });
   });
