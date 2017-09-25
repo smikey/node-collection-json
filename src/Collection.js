@@ -402,25 +402,25 @@ export default class Collection extends EntityLinker
     // add the links
     if (this.getLinks().length > 0) {
       collection.links = [];
-      this.getLinks().forEach( (link) => {
+      for(const link of this.getLinks()){
         collection.links.push(link.getJson());
-      });
+      }
     }
 
     // add the items
     if (this.getItems().length > 0) {
       collection.items = [];
-      this.getItems().forEach( (item) => {
+      for(const item of this.getItems()) {
         collection.items.push(item.getJson());
-      });
+      }
     }
 
     // add the querys
     if (this.getQueries().length > 0) {
       collection.queries = [];
-      this.getQueries().forEach( (query) => {
+      for (const query of this.getQueries()) {
         collection.queries.push(query.getJson());
-      });
+      }
     }
 
     // add template

@@ -200,17 +200,17 @@ export default class Item extends EntityLinker
     // push the data
     if (this.getData().length > 0) {
       item.data = [];
-      this.getData().forEach( (data) => {
+      for (const data of this.getData()) {
         item.data.push(data.getJson());
-      });
+      }
     }
 
     // push the links
     if (this.getLinks().length > 0) {
       item.links = [];
-      this.getLinks().forEach( (link) => {
+      for (const link of this.getLinks()) {
         item.links.push(link.getJson());
-      });
+      }
     }
 
     return item;

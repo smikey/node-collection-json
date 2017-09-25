@@ -89,9 +89,9 @@ export default class Template extends Entity
     // push the data
     let template = {};
     template.data = [];
-    this.getData().forEach( (data) => {
+    for (const data of this.getData()) {
       template.data.push(data.getJson());
-    });
+    }
 
     return template;
   }

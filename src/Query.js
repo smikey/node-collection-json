@@ -187,7 +187,7 @@ export default class Query extends Entity
         }
         return this;
       }
-    };
+    }
     this.addData(new Data(name, value, prompt));
 
     return this;
@@ -203,14 +203,14 @@ export default class Query extends Entity
     // build the query
     let href = this.getHref() + '?';
     for (const data of this.getData()) {
-      href = href + data.getName() + '=' + data.getValue() + '&'
+      href = href + data.getName() + '=' + data.getValue() + '&';
     }
     return new Promise( (resolve, reject) => {
       axios.get(href).then( (response) => {
         return resolve(Collection.getByObject(response.data));
       }).catch( error => {
         return resolve(Collection.getByObject(error.response.data));
-      })
+      });
     });
   }
 
@@ -236,9 +236,9 @@ export default class Query extends Entity
 
     if (this.getData().length > 0) {
       query.data = [];
-      this.getData().forEach( (data) => {
+      for (const data of this.getData()) {
         query.data.push(data.getJson());
-      });
+      }
     }
 
     return query;
