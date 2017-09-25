@@ -1,5 +1,6 @@
 # node-collection-json
-Nodejs tools for easy manipulation of collection+json objects.
+Lightweight nodejs tools for easy manipulation of collection+json objects.  Reference for [collection+json](http://amundsen.com/media-types/collection/)
+Hypermedia type.
 
 # Client Usage
 
