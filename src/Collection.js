@@ -25,6 +25,69 @@ export default class Collection extends EntityLinker
   }
 
   /**
+   * Get the default content type
+   *
+   * @return string
+   */
+  static get CONTENT_TYPE() {
+    return "application/vnd.collection+json";
+  }
+
+  /**
+   * Get collection node name
+   *
+   * @return string
+   */
+  static get COLLECTION() {
+    return "collection";
+  }
+
+  /**
+   * Get links node name
+   *
+   * @return string
+   */
+  static get LINKS() {
+    return "links";
+  }
+
+  /**
+   * Get items node name
+   *
+   * @return string
+   */
+  static get ITEMS() {
+    return "items";
+  }
+
+  /**
+   * Get queries node name
+   *
+   * @return string
+   */
+  static get QUERIES() {
+    return "queries";
+  }
+
+  /**
+   * Get template node name
+   *
+   * @return string
+   */
+  static get TEMPLATE() {
+    return "template";
+  }
+
+  /**
+   * Get error node name
+   *
+   * @return string
+   */
+  static get ERROR() {
+    return "error";
+  }
+
+  /**
    * parse data request in template form into a database friendly json object
    *
    * @param {Object} json The JSON object to parse (should be in Collection+JSON Template form)
@@ -35,7 +98,7 @@ export default class Collection extends EntityLinker
     let dbObject = {};
 
     //check the template object
-    let templateObject = Collection.getObjectValueByKey(json, "template");
+    let templateObject = Collection.getObjectValueByKey(json, Collection.TEMPLATE);
     if (templateObject !== undefined) {
       let template = Template.getByObject(templateObject);
       dbObject = template.getDatabaseObject();
@@ -52,7 +115,7 @@ export default class Collection extends EntityLinker
   static getByObject(json)
   {
   //check the collection object
-  let collectionObject = Collection.getObjectValueByKey(json, "collection");
+  let collectionObject = Collection.getObjectValueByKey(json, Collection.COLLECTION);
     if (collectionObject === undefined) {
         //throw new CollectionError('collection Object undefined');
     }
@@ -73,7 +136,7 @@ export default class Collection extends EntityLinker
     let collection = new Collection(hrefString);
 
     // check the links object
-    let linksObject = Collection.getObjectValueByKey(collectionObject, "links");
+    let linksObject = Collection.getObjectValueByKey(collectionObject, Collection.LINKS);
     if (Collection.isArray(linksObject)) {
       for (const linkObject of linksObject) {
 
@@ -88,7 +151,7 @@ export default class Collection extends EntityLinker
     }
 
     // check the items object
-    let itemsObject = Collection.getObjectValueByKey(collectionObject, "items");
+    let itemsObject = Collection.getObjectValueByKey(collectionObject, Collection.ITEMS);
     if (Collection.isArray(itemsObject)) {
       for (const itemObject of itemsObject) {
 
@@ -103,7 +166,7 @@ export default class Collection extends EntityLinker
     }
 
     // check the querys object
-    let queriesObject = Collection.getObjectValueByKey(collectionObject, "queries");
+    let queriesObject = Collection.getObjectValueByKey(collectionObject, Collection.QUERIES);
     if (Collection.isArray(queriesObject)) {
       for (const queryObject of queriesObject) {
 
@@ -118,7 +181,7 @@ export default class Collection extends EntityLinker
     }
 
     //check the template object
-    let templateObject = Collection.getObjectValueByKey(collectionObject, "template");
+    let templateObject = Collection.getObjectValueByKey(collectionObject, Collection.TEMPLATE);
     if (templateObject !== undefined) {
 
         // add the template
@@ -131,7 +194,7 @@ export default class Collection extends EntityLinker
     }
 
     //check the error object
-    let errorObject = Collection.getObjectValueByKey(collectionObject, "error");
+    let errorObject = Collection.getObjectValueByKey(collectionObject, Collection.ERROR);
     if (errorObject !== undefined) {
 
         // add the error
@@ -154,6 +217,13 @@ export default class Collection extends EntityLinker
   constructor(uri)
   {
     super();
+
+    /**
+     * The default content type header
+     *
+     * @var string
+     */
+    this.contentType = Collection.CONTENT_TYPE;
 
     /**
      * The api root uri
@@ -437,6 +507,29 @@ export default class Collection extends EntityLinker
   }
 
   /**
+   * Get ContentType
+   *
+   * @return String
+   */
+  getContentType()
+  {
+    return this.contentType;
+  }
+
+  /**
+   * Set ContentType
+   *
+   * @param {contentType} The contentType header value to set
+   * @return Collection
+   */
+  setContentType(contentType)
+  {
+    this.contentType = contentType;
+
+    return this;
+  }
+
+  /**
    * Post template contents to the server
    *
    * @return Promise
@@ -482,7 +575,7 @@ export default class Collection extends EntityLinker
           axios({
             method: method,
             url: url,
-            headers: {'Content-Type': 'application/vnd.collection+json'},
+            headers: {'Content-Type': this.contentType},
             data: templateString,
           }).then( (response) => {
             return resolve(Collection.getByObject(response.data));

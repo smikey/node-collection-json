@@ -1,7 +1,7 @@
 {
   "name": "node-collection-json",
-  "version": "1.1.2",
-  "description": "Nodejs tools for easy manipulation of collection+json objects",
+  "version": "1.1.3",
+  "description": "Lightweight nodejs tools for easy manipulation of collection+json objects",
   "main": "lib/index.js",
   "directories": {
     "test": "tests"

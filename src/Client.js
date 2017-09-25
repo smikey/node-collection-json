@@ -2,7 +2,7 @@ import Collection from './Collection';
 import axios from 'axios';
 
 /**
- * Class: Client
+ * Class: Client for communication with collection+json enabled servers
  *
  * @author S. Fleming <npm@int5.net>
  * @since Mon Aug 14 16:47:09 CEST 2017
@@ -25,6 +25,22 @@ export default class Client
    */
   static get JSON() {
     return "json";
+  }
+
+  /**
+   * Call the API and get collection object
+   *
+   * @return Promise
+   */
+  static getCollectionByResource(resource)
+  {
+    return new Promise( (resolve, reject) => {
+      axios.get(resource).then( (response) => {
+        return resolve(Collection.getByObject(response.data));
+      }).catch( error => {
+        return reject(Collection.getByObject(error.response.data));
+      });
+    });
   }
 
   /**
@@ -58,22 +74,6 @@ export default class Client
   }
 
   /**
-   * Call the API and get collection object
-   *
-   * @return Promise
-   */
-  getCollectionByResource(resource)
-  {
-    return new Promise( (resolve, reject) => {
-      axios.get(resource).then( (response) => {
-        return resolve(Collection.getByObject(response.data));
-      }).catch( error => {
-        return reject(Collection.getByObject(error.response.data));
-      });
-    });
-  }
-
-  /**
    * Get the collection
    *
    * @return Collection
@@ -81,7 +81,7 @@ export default class Client
   getCollection()
   {
     if (this.collection === null) {
-      return this.getCollectionByResource(this.resource);
+      return Client.getCollectionByResource(this.resource);
     } else {
       return new Promise( (resolve, reject) => {
         resolve(this.collection);
