@@ -35,7 +35,7 @@ export default class Client
   static getCollectionByResource(resource)
   {
     return new Promise( (resolve, reject) => {
-      axios.get(resource).then( (response) => {
+      axios.get(resource,{withCredentials}).then( (response) => {
         return resolve(Collection.getByObject(response.data));
       }).catch( error => {
         return reject(Collection.getByObject(error.response.data));
