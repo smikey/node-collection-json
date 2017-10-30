@@ -169,7 +169,7 @@ export default class Link extends Entity
             url += '&' + key + '=' + params[key];
         }
       }
-      axios.get(url).then( (response) => {
+      axios.get(url,{withCredentials}).then( (response) => {
         return resolve(Collection.getByObject(response.data));
       }).catch( error => {
         return reject(Collection.getByObject(error.response.data));
