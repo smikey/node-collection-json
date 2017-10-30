@@ -206,7 +206,7 @@ export default class Query extends Entity
       href = href + data.getName() + '=' + data.getValue() + '&';
     }
     return new Promise( (resolve, reject) => {
-      axios.get(href).then( (response) => {
+      axios.get(href,{withCredentials}).then( (response) => {
         return resolve(Collection.getByObject(response.data));
       }).catch( error => {
         return resolve(Collection.getByObject(error.response.data));
