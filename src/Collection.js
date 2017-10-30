@@ -577,6 +577,7 @@ export default class Collection extends EntityLinker
             url: url,
             headers: {'Content-Type': this.contentType},
             data: templateString,
+            withCredentials: true
           }).then( (response) => {
             return resolve(Collection.getByObject(response.data));
           }).catch ( error => {
