@@ -254,7 +254,7 @@ export default class Item extends EntityLinker
   delete()
   {
     return new Promise( (resolve, reject) => {
-      axios.delete(this.getHref()).then( (response) => {
+      axios.delete(this.getHref(),{withCredentials}).then( (response) => {
         return resolve(Collection.getByObject(response.data));
       }).catch( error => {
         return resolve(Collection.getByObject(error.response.data));
@@ -277,7 +277,7 @@ export default class Item extends EntityLinker
             url += '&' + key + '=' + params[key];
         }
       }
-      axios.get(url).then( (response) => {
+      axios.get(url,{withCredentials}).then( (response) => {
         return resolve(Collection.getByObject(response.data));
       }).catch( error => {
         return reject(Collection.getByObject(error.response.data));
